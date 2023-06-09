@@ -3,7 +3,7 @@
 	"package": "net.just_s.mixin.client",
 	"compatibilityLevel": "JAVA_17",
 	"client": [
-		"ExampleClientMixin"
+      "MixinVideoOptionsScreen"
 	],
 	"injectors": {
 		"defaultRequire": 1

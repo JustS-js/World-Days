@@ -8,7 +8,9 @@
 		"Just_S"
 	],
 	"contact": {
-		"sources": "https://github.com/JustS-js/World-Days"
+		"issues": "https://github.com/JustS-js/World-Days/issues",
+		"sources": "https://github.com/JustS-js/World-Days",
+		"homepage": "https://github.com/JustS-js/World-Days"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/world-days/icon.png",
@@ -16,6 +18,9 @@
 	"entrypoints": {
 		"client": [
 			"net.just_s.WorldDaysModClient"
+		],
+		"modmenu": [
+			"net.just_s.ModMenuIntegration"
 		]
 	},
 	"mixins": [
@@ -27,11 +32,12 @@
 	],
 	"depends": {
 		"fabricloader": ">=0.14.6",
-		"minecraft": "~1.19",
+		"minecraft": "1.19.2",
 		"java": ">=17",
 		"fabric-api": "*"
 	},
 	"suggests": {
-		"another-mod": "Mod Menu"
+		"modmenu": ">=4.0.0",
+		"cloth-config": ">=8.2.88"
 	}
 }

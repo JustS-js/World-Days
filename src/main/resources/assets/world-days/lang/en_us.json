@@ -1,3 +1,21 @@
 {
-  "stat.world-days.day": "Day %d"
+  "hud.world-days.day": "Day %d",
+  "modmenu.descriptionTranslation.world-days": "See the number of days you have survived in your Minecraft World via HUD",
+  "config.world-days.title": "World Days Config",
+  "config.world-days.category.general": "General",
+  "config.world-days.enable": "Enable Text Rendering of Day Counter",
+  "config.world-days.start-from-zero": "Start Counting from 0",
+  "config.world-days.use-custom-text": "Use Custom Text",
+  "config.world-days.custom-text": "Custom Text to Use",
+  "config.world-days.shadow": "Render Shadow",
+  "config.world-days.text.coords": "Text Coordinate",
+  "config.world-days.shadow.coords": "Relative Shadow Coordinate",
+  "config.world-days.category.style": "Style",
+  "config.world-days.bold": "Bold",
+  "config.world-days.italic": "Italic",
+  "config.world-days.obfuscated": "Obfuscated",
+  "config.world-days.strikethrough": "Strikethrough",
+  "config.world-days.underline": "Underline",
+  "config.world-days.color.hud": "Text Color",
+  "config.world-days.color.shadow": "Shadow Color"
 }

@@ -4,6 +4,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
@@ -19,10 +20,14 @@ public class WorldDaysModClient implements ClientModInitializer {
         HudRenderCallback.EVENT.register(this::renderText);
     }
 
-    private void renderText(MatrixStack matrixStack, float v) {
-        if (MC.options.debugEnabled) return;
+    public static MutableText localize(String type, String id) {
+        return Text.translatable(type + ".world-days." + id);
+    }
 
-        // Calculate current day int he world
+    private void renderText(MatrixStack matrixStack, float v) {
+        if (MC.options.debugEnabled || !Config.ENABLE) return;
+
+        // Calculate current day in the world
         long day = MC.world.getTimeOfDay() / 24000L;
         if (!Config.START_FROM_ZERO) {
             day += 1;
@@ -39,9 +44,9 @@ public class WorldDaysModClient implements ClientModInitializer {
         // Figure out what to render
         Text text;
         if (Config.SHOULD_USE_CUSTOM_TEXT) {
-            text = Text.translatable(Config.CUSTOM_TEXT, day).setStyle(style);
+            text = Text.literal(String.format(Config.CUSTOM_TEXT, day)).setStyle(style);
         } else {
-            text = Text.translatable("stat.world-days.day", day).setStyle(style);
+            text = Text.translatable("hud.world-days.day", day).setStyle(style);
         }
 
         // Render Shadow first if needed

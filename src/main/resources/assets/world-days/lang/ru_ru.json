@@ -1,3 +1,21 @@
 {
-  "stat.world-days.day": "День %d"
+  "hud.world-days.day": "День %d",
+  "modmenu.descriptionTranslation.world-days": "Лицезрейте количество дней, прожитых вами в вашем мире Minecraft, в реальном времени!",
+  "config.world-days.title": "Конфигурация World Days",
+  "config.world-days.category.general": "Основные",
+  "config.world-days.enable": "Включить отображение текста счётчика дней",
+  "config.world-days.start-from-zero": "Начинать отсчёт с 0",
+  "config.world-days.use-custom-text": "Использовать ваш текст",
+  "config.world-days.custom-text": "Ваш текст",
+  "config.world-days.shadow": "Отображать тень",
+  "config.world-days.text.coords": "Координата текста",
+  "config.world-days.shadow.coords": "Относительная координата тени",
+  "config.world-days.category.style": "Стиль",
+  "config.world-days.bold": "Жирный",
+  "config.world-days.italic": "Курсив",
+  "config.world-days.obfuscated": "Запутанный",
+  "config.world-days.strikethrough": "Зачёркнутый",
+  "config.world-days.underline": "Подчёркнутый",
+  "config.world-days.color.hud": "Цвет текста",
+  "config.world-days.color.shadow": "Цвет тени"
 }
