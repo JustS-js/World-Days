@@ -1,41 +1,37 @@
 {
 	"schemaVersion": 1,
-	"id": "modid",
+	"id": "world-days",
 	"version": "${version}",
-	"name": "Example mod",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"name": "World Days",
+	"description": "See the number of days you have survived in your Minecraft World via HUD",
 	"authors": [
-		"Me!"
+		"Just_S"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/JustS-js/World-Days"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/modid/icon.png",
-	"environment": "*",
+	"icon": "assets/world-days/icon.png",
+	"environment": "client",
 	"entrypoints": {
-		"main": [
-			"com.example.ExampleMod"
-		],
 		"client": [
-			"com.example.ExampleModClient"
+			"net.just_s.WorldDaysModClient"
 		]
 	},
 	"mixins": [
-		"modid.mixins.json",
+		"world-days.mixins.json",
 		{
-			"config": "modid.client.mixins.json",
+			"config": "world-days.client.mixins.json",
 			"environment": "client"
 		}
 	],
 	"depends": {
-		"fabricloader": ">=0.14.21",
-		"minecraft": "~1.20",
+		"fabricloader": ">=0.14.6",
+		"minecraft": "~1.19",
 		"java": ">=17",
 		"fabric-api": "*"
 	},
 	"suggests": {
-		"another-mod": "*"
+		"another-mod": "Mod Menu"
 	}
 }
