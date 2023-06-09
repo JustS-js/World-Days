@@ -20,7 +20,7 @@
 			"net.just_s.WorldDaysModClient"
 		],
 		"modmenu": [
-			"net.just_s.ModMenuIntegration"
+			"net.just_s.util.ModMenuIntegration"
 		]
 	},
 	"mixins": [

@@ -2,18 +2,23 @@ package net.just_s.util;
 
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
-import net.just_s.Config;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
 
-import static net.just_s.WorldDaysModClient.localize;
+import static net.just_s.WorldDaysModClient.CONFIG;
 
 public class ClothConfigIntegration {
+    public static MutableText localize(String type, String id) {
+        return Text.translatable(type + ".world-days." + id);
+    }
+
     public static Screen generateScreen(Screen parent) {
         ConfigBuilder builder = ConfigBuilder.create()
                 .setParentScreen(parent)
                 .setTitle(localize("config", "title"))
-                .setSavingRunnable(Config::save)
+                .setSavingRunnable(CONFIG::save)
                 .setTransparentBackground(true);
         ConfigEntryBuilder entryBuilder = builder.entryBuilder();
 
@@ -21,132 +26,149 @@ public class ClothConfigIntegration {
                 .addEntry(entryBuilder
                         .startBooleanToggle(
                                 localize("config", "enable"),
-                                Config.ENABLE
+                                CONFIG.enable
                         )
-                        .setSaveConsumer(value -> Config.ENABLE = value)
+                        .setSaveConsumer(value -> CONFIG.enable = value)
                         .build()
                 )
                 .addEntry(entryBuilder
                         .startBooleanToggle(
                                 localize("config", "start-from-zero"),
-                                Config.START_FROM_ZERO
+                                CONFIG.startFromZero
                         )
-                        .setSaveConsumer(value -> Config.START_FROM_ZERO = value)
+                        .setSaveConsumer(value -> CONFIG.startFromZero = value)
                         .build()
                 )
                 .addEntry(entryBuilder
                         .startBooleanToggle(
                                 localize("config", "use-custom-text"),
-                                Config.SHOULD_USE_CUSTOM_TEXT
+                                CONFIG.shouldUseCustomText
                         )
-                        .setSaveConsumer(value -> Config.SHOULD_USE_CUSTOM_TEXT = value)
+                        .setSaveConsumer(value -> CONFIG.shouldUseCustomText = value)
                         .build()
                 )
                 .addEntry(entryBuilder
                         .startStrField(
                                 localize("config", "custom-text"),
-                                Config.CUSTOM_TEXT
+                                CONFIG.customText
                         )
                         .setDefaultValue("Custom Text %d")
-                        .setSaveConsumer(value -> Config.CUSTOM_TEXT = value)
+                        .setSaveConsumer(value -> CONFIG.customText = value)
                         .build()
                 )
                 .addEntry(entryBuilder
                         .startBooleanToggle(
                                 localize("config", "shadow"),
-                                Config.SHOULD_DRAW_SHADOW
+                                CONFIG.shouldDrawShadow
                         )
-                        .setSaveConsumer(value -> Config.SHOULD_DRAW_SHADOW = value)
+                        .setSaveConsumer(value -> CONFIG.shouldDrawShadow = value)
                         .build()
                 )
                 .addEntry(entryBuilder
                         .startFloatField(
                                 localize("config", "text.coords").append(" X"),
-                                Config.HUD_X
+                                CONFIG.hudX
                         )
-                        .setSaveConsumer(value -> Config.HUD_X = value)
+                        .setSaveConsumer(value -> CONFIG.hudX = value)
                         .build()
                 )
                 .addEntry(entryBuilder
                         .startFloatField(
                                 localize("config", "text.coords").append(" Y"),
-                                Config.HUD_Y
+                                CONFIG.hudY
                         )
-                        .setSaveConsumer(value -> Config.HUD_Y = value)
+                        .setSaveConsumer(value -> CONFIG.hudY = value)
                         .build()
                 )
                 .addEntry(entryBuilder
                         .startFloatField(
                                 localize("config", "shadow.coords").append(" X"),
-                                Config.SHADOW_RELATIVE_X
+                                CONFIG.shadowRelativeX
                         )
-                        .setSaveConsumer(value -> Config.SHADOW_RELATIVE_X = value)
+                        .setSaveConsumer(value -> CONFIG.shadowRelativeX = value)
                         .build()
                 )
                 .addEntry(entryBuilder
                         .startFloatField(
                                 localize("config", "shadow.coords").append(" Y"),
-                                Config.SHADOW_RELATIVE_Y
+                                CONFIG.shadowRelativeY
                         )
-                        .setSaveConsumer(value -> Config.SHADOW_RELATIVE_Y = value)
+                        .setSaveConsumer(value -> CONFIG.shadowRelativeY = value)
                         .build()
                 );
 
         builder.getOrCreateCategory(localize("config", "category.style"))
                 .addEntry(entryBuilder
+                        .startStrField(
+                                localize("config", "font.id"),
+                                CONFIG.fontIdentifier
+                        )
+                        .setDefaultValue("minecraft:default")
+                        .setSaveConsumer(value -> CONFIG.fontIdentifier = value)
+                        .build()
+                )
+                .addEntry(entryBuilder
+                        .startFloatField(
+                                localize("config", "font.size"),
+                                CONFIG.fontSize
+                        )
+                        .setSaveConsumer(value -> CONFIG.fontSize = value)
+                        .build()
+                )
+                .addEntry(entryBuilder
                         .startBooleanToggle(
                                 localize("config", "bold"),
-                                Config.BOLD
+                                CONFIG.bold
                         )
-                        .setSaveConsumer(value -> Config.BOLD = value)
+                        .setSaveConsumer(value -> CONFIG.bold = value)
                         .build()
                 )
                 .addEntry(entryBuilder
                         .startBooleanToggle(
                                 localize("config", "italic"),
-                                Config.ITALIC
+                                CONFIG.italic
                         )
-                        .setSaveConsumer(value -> Config.ITALIC = value)
+                        .setSaveConsumer(value -> CONFIG.italic = value)
                         .build()
                 )
                 .addEntry(entryBuilder
                         .startBooleanToggle(
                                 localize("config", "obfuscated"),
-                                Config.OBFUSCATED
+                                CONFIG.obfuscated
                         )
-                        .setSaveConsumer(value -> Config.OBFUSCATED = value)
+                        .setSaveConsumer(value -> CONFIG.obfuscated = value)
                         .build()
                 )
                 .addEntry(entryBuilder
                         .startBooleanToggle(
                                 localize("config", "strikethrough"),
-                                Config.STRIKETHROUGH
+                                CONFIG.strikethrough
                         )
-                        .setSaveConsumer(value -> Config.STRIKETHROUGH = value)
+                        .setSaveConsumer(value -> CONFIG.strikethrough = value)
                         .build()
                 )
                 .addEntry(entryBuilder
                         .startBooleanToggle(
                                 localize("config", "underline"),
-                                Config.UNDERLINE
+                                CONFIG.underline
                         )
-                        .setSaveConsumer(value -> Config.UNDERLINE = value)
+                        .setSaveConsumer(value -> CONFIG.underline = value)
                         .build()
                 )
                 .addEntry(entryBuilder
                         .startColorField(
                                 localize("config", "color.hud"),
-                                TextColor.parse(Config.HUD_COLOR)
+                                TextColor.parse(CONFIG.hudColor)
                         )
-                        .setSaveConsumer(value -> Config.HUD_COLOR = TextColor.fromRgb(value).getHexCode())
+                        .setSaveConsumer(value -> CONFIG.hudColor = TextColor.fromRgb(value).getHexCode())
                         .build()
                 )
                 .addEntry(entryBuilder
                         .startColorField(
                                 localize("config", "color.shadow"),
-                                TextColor.parse(Config.SHADOW_COLOR)
+                                TextColor.parse(CONFIG.shadowColor)
                         )
-                        .setSaveConsumer(value -> Config.SHADOW_COLOR = TextColor.fromRgb(value).getHexCode())
+                        .setSaveConsumer(value -> CONFIG.shadowColor = TextColor.fromRgb(value).getHexCode())
                         .build()
                 );
 

@@ -1,41 +1,111 @@
 package net.just_s;
 
-import com.terraformersmc.modmenu.api.ConfigScreenFactory;
-import com.terraformersmc.modmenu.api.ModMenuApi;
-import me.shedaniel.clothconfig2.api.ConfigBuilder;
-import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
+import com.google.gson.GsonBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
-import net.minecraft.text.TextColor;
+import com.google.gson.Gson;
+
+import java.io.*;
 
 public class Config {
-    public static boolean ENABLE = true;
-    public static boolean START_FROM_ZERO = false;
-    public static boolean SHOULD_USE_CUSTOM_TEXT = false;
-    public static String CUSTOM_TEXT = "Custom Text %d";
+    public boolean enable;
+    public boolean startFromZero;
+    public boolean shouldUseCustomText;
+    public String customText;
 
-    public static boolean BOLD = true;
-    public static boolean ITALIC = false;
-    public static boolean OBFUSCATED = false;
-    public static boolean STRIKETHROUGH = false;
-    public static boolean UNDERLINE = false;
+    public boolean bold;
+    public boolean italic;
+    public boolean obfuscated;
+    public boolean strikethrough;
+    public boolean underline;
+    public float fontSize;
+    public String fontIdentifier;
 
-    public static float HUD_X = 10f;
-    public static float HUD_Y = 10f;
-    public static String HUD_COLOR = "#FFFFFF";
+    public float hudX;
+    public float hudY;
+    public String hudColor;
 
-    public static boolean SHOULD_DRAW_SHADOW = true;
-    public static float SHADOW_RELATIVE_X = 1f;
-    public static float SHADOW_RELATIVE_Y = 1f;
-    public static String SHADOW_COLOR = "#000000";
+    public boolean shouldDrawShadow;
+    public float shadowRelativeX;
+    public float shadowRelativeY;
+    public String shadowColor;
+
+    public Config() {}
 
     public static Screen generateScreen(Screen parent) {
         return null;
     }
 
-    public static void save() {
+    public void save() {
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .create();
+        String json = gson.toJson(this);
 
+        try {
+            FileWriter writer = new FileWriter(
+                    FabricLoader.getInstance().getConfigDir().resolve("WorldDays.json").toFile()
+            );
+            writer.write(json);
+            writer.close();
+        } catch (IOException e) {
+            WorldDaysModClient.LOGGER.error("Error while saving:" + e.getMessage());
+        }
+    }
+
+    public void load() {
+        try {
+            BufferedReader bufferedReader = new BufferedReader(
+                    new FileReader(
+                            FabricLoader.getInstance().getConfigDir().resolve("WorldDays.json").toFile()
+                    )
+            );
+
+            Gson gson = new Gson();
+            Config cfg = gson.fromJson(bufferedReader, Config.class);
+            this.enable = cfg.enable;
+            this.startFromZero = cfg.startFromZero;
+            this.shouldUseCustomText = cfg.shouldUseCustomText;
+            this.customText = cfg.customText;
+
+            this.bold = cfg.bold;
+            this.italic = cfg.italic;
+            this.obfuscated = cfg.obfuscated;
+            this.strikethrough = cfg.strikethrough;
+            this.underline = cfg.underline;
+            this.fontSize = cfg.fontSize;
+            this.fontIdentifier = cfg.fontIdentifier;
+
+            this.hudX = cfg.hudX;
+            this.hudY = cfg.hudY;
+            this.hudColor = cfg.hudColor;
+
+            this.shouldDrawShadow = cfg.shouldDrawShadow;
+            this.shadowRelativeX = cfg.shadowRelativeX;
+            this.shadowRelativeY = cfg.shadowRelativeY;
+            this.shadowColor = cfg.shadowColor;
+        } catch (FileNotFoundException e) {
+            this.enable = true;
+            this.startFromZero = false;
+            this.shouldUseCustomText = false;
+            this.customText = "Custom Text %d";
+
+            this.bold = true;
+            this.italic = false;
+            this.obfuscated = false;
+            this.strikethrough = false;
+            this.underline = false;
+            this.fontSize = 1f;
+            this.fontIdentifier = "minecraft:default";
+
+            this.hudX = 10f;
+            this.hudY = 10f;
+            this.hudColor = "#FFFFFF";
+
+            this.shouldDrawShadow = true;
+            this.shadowRelativeX = 1f;
+            this.shadowRelativeY = 1f;
+            this.shadowColor = "#000000";
+        }
     }
 }

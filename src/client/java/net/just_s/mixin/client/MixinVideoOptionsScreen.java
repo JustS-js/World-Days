@@ -1,16 +1,12 @@
 package net.just_s.mixin.client;
 
 import net.fabricmc.loader.api.FabricLoader;
-import net.just_s.Config;
 import net.just_s.WorldDaysModClient;
 import net.just_s.util.ClothConfigIntegration;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.option.OnlineOptionsScreen;
-import net.minecraft.client.gui.screen.option.OptionsScreen;
 import net.minecraft.client.gui.screen.option.VideoOptionsScreen;
 import net.minecraft.client.gui.widget.ButtonListWidget;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.option.SimpleOption;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Optional;
+import static net.just_s.WorldDaysModClient.CONFIG;
 
 @Mixin(VideoOptionsScreen.class)
 public class MixinVideoOptionsScreen extends Screen {
@@ -31,7 +27,6 @@ public class MixinVideoOptionsScreen extends Screen {
 
 	@Inject(method = "init", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/widget/ButtonListWidget;addAll([Lnet/minecraft/client/option/SimpleOption;)V", shift = At.Shift.AFTER))
 	private void run(CallbackInfo info) {
-		WorldDaysModClient.LOGGER.info(isLoaded("cloth-config") +"|"+ isLoaded("modmenu"));
 		if (isLoaded("modmenu") && isLoaded("cloth-config")) return;
 
 		if (isLoaded("cloth-config")) {
@@ -47,10 +42,10 @@ public class MixinVideoOptionsScreen extends Screen {
 		} else {
 			SimpleOption<Boolean> simpleOption = SimpleOption.ofBoolean(
 					"config.world-days.enable",
-					Config.ENABLE,
+					CONFIG.enable,
 					(value) -> {
-						Config.ENABLE = value;
-						Config.save();
+						CONFIG.enable = value;
+						CONFIG.save();
 					}
 			);
 			list.addSingleOptionEntry(simpleOption);

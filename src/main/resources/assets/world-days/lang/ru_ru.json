@@ -11,6 +11,8 @@
   "config.world-days.text.coords": "Координата текста",
   "config.world-days.shadow.coords": "Относительная координата тени",
   "config.world-days.category.style": "Стиль",
+  "config.world-days.font.id": "Идентификатор шрифта",
+  "config.world-days.font.size": "Размер шрифта",
   "config.world-days.bold": "Жирный",
   "config.world-days.italic": "Курсив",
   "config.world-days.obfuscated": "Запутанный",
