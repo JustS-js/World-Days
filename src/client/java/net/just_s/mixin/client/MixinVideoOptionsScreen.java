@@ -5,8 +5,8 @@ import net.just_s.WorldDaysModClient;
 import net.just_s.util.ClothConfigIntegration;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.option.VideoOptionsScreen;
-import net.minecraft.client.gui.widget.ButtonListWidget;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.gui.widget.OptionListWidget;
 import net.minecraft.client.option.SimpleOption;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,25 +19,24 @@ import static net.just_s.WorldDaysModClient.CONFIG;
 
 @Mixin(VideoOptionsScreen.class)
 public class MixinVideoOptionsScreen extends Screen {
-	@Shadow private ButtonListWidget list;
+
+	@Shadow private OptionListWidget list;
 
 	protected MixinVideoOptionsScreen(Text title) {
 		super(title);
 	}
 
-	@Inject(method = "init", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/widget/ButtonListWidget;addAll([Lnet/minecraft/client/option/SimpleOption;)V", shift = At.Shift.AFTER))
+	@Inject(method = "init", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/widget/OptionListWidget;addAll([Lnet/minecraft/client/option/SimpleOption;)V", shift = At.Shift.AFTER))
 	private void run(CallbackInfo info) {
 		if (isLoaded("modmenu") && isLoaded("cloth-config")) return;
 
 		if (isLoaded("cloth-config")) {
-			ButtonWidget btn = new ButtonWidget(
-					5, 5,
-					150, 20,
+			ButtonWidget btn = ButtonWidget.builder(
 					Text.translatable("config.world-days.title"),
 					(button) -> WorldDaysModClient.MC.setScreen(
 							ClothConfigIntegration.generateScreen((VideoOptionsScreen)(Object)this)
 					)
-			);
+			).size(150, 20).position(5, 5).build();
 			this.addDrawableChild(btn);
 		} else {
 			SimpleOption<Boolean> simpleOption = SimpleOption.ofBoolean(

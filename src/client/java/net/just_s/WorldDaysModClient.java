@@ -3,6 +3,9 @@ package net.just_s;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -29,7 +32,7 @@ public class WorldDaysModClient implements ClientModInitializer {
         return (((((alpha << 8) + red) << 8) + green) << 8) + blue;
     }
 
-    private void renderText(MatrixStack matrices, float v) {
+    private void renderText(DrawContext context, float tickDelta) {
         if (MC.options.debugEnabled || !CONFIG.enable) return;
 
         // Calculate current day in the world
@@ -59,37 +62,41 @@ public class WorldDaysModClient implements ClientModInitializer {
         }
 
         // Create "layer" for text rendering
-        matrices.push();
+        context.getMatrices().push();
 
         // Move said layer to Text coordinates
-        matrices.translate(CONFIG.hudX, CONFIG.hudY, 0);
+        context.getMatrices().translate(CONFIG.hudX, CONFIG.hudY, 0);
 
         // scale layer to Font Size
-        matrices.scale(CONFIG.fontSize, CONFIG.fontSize, 0.0F);
+        context.getMatrices().scale(CONFIG.fontSize, CONFIG.fontSize, 0.0F);
 
         // Render Shadow first if needed
         if (CONFIG.shouldDrawShadow) {
             MC.textRenderer.draw(
-                    matrices, text,
+                    text,
                     CONFIG.shadowRelativeX, CONFIG.shadowRelativeY,
                     rgb2argb(
                             Integer.parseInt(CONFIG.shadowColor.substring(1), 16),
                             CONFIG.alpha
-                    )
+                    ), false,
+                    context.getMatrices().peek().getPositionMatrix(), context.getVertexConsumers(),
+                    TextRenderer.TextLayerType.NORMAL, 0, 15728880
             );
         }
 
         // Render text
         MC.textRenderer.draw(
-                matrices, text,
+                text,
                 0, 0,
                 rgb2argb(
                         Integer.parseInt(CONFIG.hudColor.substring(1), 16),
                         CONFIG.alpha
-                )
+                ), false,
+                context.getMatrices().peek().getPositionMatrix(), context.getVertexConsumers(),
+                TextRenderer.TextLayerType.NORMAL, 0, 15728880
         );
 
         // Revert all settings, so other can render their things
-        matrices.pop();
+        context.getMatrices().pop();
     }
 }
