@@ -160,7 +160,7 @@ public class ClothConfigIntegration {
                                 localize("config", "color.hud"),
                                 TextColor.parse(CONFIG.hudColor)
                         )
-                        .setSaveConsumer(value -> CONFIG.hudColor = TextColor.fromRgb(value).getHexCode())
+                        .setSaveConsumer(value -> CONFIG.hudColor = String.format("#%06X", value))
                         .build()
                 )
                 .addEntry(entryBuilder
@@ -168,7 +168,7 @@ public class ClothConfigIntegration {
                                 localize("config", "color.shadow"),
                                 TextColor.parse(CONFIG.shadowColor)
                         )
-                        .setSaveConsumer(value -> CONFIG.shadowColor = TextColor.fromRgb(value).getHexCode())
+                        .setSaveConsumer(value -> CONFIG.shadowColor = String.format("#%06X", value))
                         .build()
                 )
                 .addEntry(entryBuilder

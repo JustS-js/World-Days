@@ -3,10 +3,6 @@ plugins {
 	id 'maven-publish'
 }
 
-//configurations {
-//	modImplementation.exclude group: 'net.fabricmc', module: 'fabric-loader'
-//}
-
 version = project.mod_version
 group = project.maven_group
 
