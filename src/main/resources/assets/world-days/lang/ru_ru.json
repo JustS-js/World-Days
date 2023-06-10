@@ -19,5 +19,6 @@
   "config.world-days.strikethrough": "Зачёркнутый",
   "config.world-days.underline": "Подчёркнутый",
   "config.world-days.color.hud": "Цвет текста",
-  "config.world-days.color.shadow": "Цвет тени"
+  "config.world-days.color.shadow": "Цвет тени",
+  "config.world-days.alpha": "Альфа значение"
 }

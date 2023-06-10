@@ -19,5 +19,6 @@
   "config.world-days.strikethrough": "Strikethrough",
   "config.world-days.underline": "Underline",
   "config.world-days.color.hud": "Text Color",
-  "config.world-days.color.shadow": "Shadow Color"
+  "config.world-days.color.shadow": "Shadow Color",
+  "config.world-days.alpha": "Alpha Value"
 }
