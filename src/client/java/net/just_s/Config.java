@@ -20,6 +20,7 @@ public class Config {
     public boolean underline;
     public float fontSize;
     public String fontIdentifier;
+    public int alpha;
 
     public float hudX;
     public float hudY;
@@ -33,6 +34,7 @@ public class Config {
     public Config() {}
 
     public static Screen generateScreen(Screen parent) {
+        // TODO: make vanilla screen without Cloth Config API
         return null;
     }
 
@@ -75,6 +77,7 @@ public class Config {
             this.underline = cfg.underline;
             this.fontSize = cfg.fontSize;
             this.fontIdentifier = cfg.fontIdentifier;
+            this.alpha = cfg.alpha;
 
             this.hudX = cfg.hudX;
             this.hudY = cfg.hudY;
@@ -97,6 +100,7 @@ public class Config {
             this.underline = false;
             this.fontSize = 1f;
             this.fontIdentifier = "minecraft:default";
+            this.alpha = 255;
 
             this.hudX = 10f;
             this.hudY = 10f;

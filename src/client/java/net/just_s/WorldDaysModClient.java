@@ -6,7 +6,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.text.TextColor;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +20,13 @@ public class WorldDaysModClient implements ClientModInitializer {
         HudRenderCallback.EVENT.register(this::renderText);
         CONFIG = new Config();
         CONFIG.load();
+    }
+
+    private static int rgb2argb(int rgb, int alpha) {
+        int red = rgb & 255;
+        int green = (rgb >> 8) & 255;
+        int blue = (rgb >> 16) & 255;
+        return (((((alpha << 8) + red) << 8) + green) << 8) + blue;
     }
 
     private void renderText(MatrixStack matrices, float v) {
@@ -52,18 +58,24 @@ public class WorldDaysModClient implements ClientModInitializer {
             text = Text.translatable("hud.world-days.day", day).setStyle(style);
         }
 
-        // Font Size
+        // Create "layer" for text rendering
         matrices.push();
+
+        // Move said layer to Text coordinates
         matrices.translate(CONFIG.hudX, CONFIG.hudY, 0);
+
+        // scale layer to Font Size
         matrices.scale(CONFIG.fontSize, CONFIG.fontSize, 0.0F);
 
         // Render Shadow first if needed
         if (CONFIG.shouldDrawShadow) {
             MC.textRenderer.draw(
                     matrices, text,
-                    CONFIG.shadowRelativeX,
-                    CONFIG.shadowRelativeY,
-                    TextColor.parse(CONFIG.shadowColor).getRgb()
+                    CONFIG.shadowRelativeX, CONFIG.shadowRelativeY,
+                    rgb2argb(
+                            Integer.parseInt(CONFIG.shadowColor.substring(1), 16),
+                            CONFIG.alpha
+                    )
             );
         }
 
@@ -71,8 +83,13 @@ public class WorldDaysModClient implements ClientModInitializer {
         MC.textRenderer.draw(
                 matrices, text,
                 0, 0,
-                TextColor.parse(CONFIG.hudColor).getRgb()
+                rgb2argb(
+                        Integer.parseInt(CONFIG.hudColor.substring(1), 16),
+                        CONFIG.alpha
+                )
         );
+
+        // Revert all settings, so other can render their things
         matrices.pop();
     }
 }

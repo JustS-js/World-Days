@@ -170,6 +170,14 @@ public class ClothConfigIntegration {
                         )
                         .setSaveConsumer(value -> CONFIG.shadowColor = TextColor.fromRgb(value).getHexCode())
                         .build()
+                )
+                .addEntry(entryBuilder
+                        .startIntSlider(
+                                localize("config", "alpha"),
+                                CONFIG.alpha, 0, 255
+                        )
+                        .setSaveConsumer(value -> CONFIG.alpha = value)
+                        .build()
                 );
 
         return builder.build();
