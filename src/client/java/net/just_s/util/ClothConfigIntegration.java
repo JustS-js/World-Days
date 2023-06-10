@@ -4,14 +4,14 @@ import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
+import net.minecraft.text.TranslatableText;
 
 import static net.just_s.WorldDaysModClient.CONFIG;
 
 public class ClothConfigIntegration {
     public static MutableText localize(String type, String id) {
-        return Text.translatable(type + ".world-days." + id);
+        return new TranslatableText(type + ".world-days." + id);
     }
 
     public static Screen generateScreen(Screen parent) {
@@ -160,7 +160,7 @@ public class ClothConfigIntegration {
                                 localize("config", "color.hud"),
                                 TextColor.parse(CONFIG.hudColor)
                         )
-                        .setSaveConsumer(value -> CONFIG.hudColor = TextColor.fromRgb(value).getHexCode())
+                        .setSaveConsumer(value -> CONFIG.hudColor = String.format("#%06X", value))
                         .build()
                 )
                 .addEntry(entryBuilder
@@ -168,7 +168,7 @@ public class ClothConfigIntegration {
                                 localize("config", "color.shadow"),
                                 TextColor.parse(CONFIG.shadowColor)
                         )
-                        .setSaveConsumer(value -> CONFIG.shadowColor = TextColor.fromRgb(value).getHexCode())
+                        .setSaveConsumer(value -> CONFIG.shadowColor = String.format("#%06X", value))
                         .build()
                 )
                 .addEntry(entryBuilder

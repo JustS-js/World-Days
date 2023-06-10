@@ -3,12 +3,11 @@ package net.just_s;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +31,7 @@ public class WorldDaysModClient implements ClientModInitializer {
         return (((((alpha << 8) + red) << 8) + green) << 8) + blue;
     }
 
-    private void renderText(DrawContext context, float tickDelta) {
+    private void renderText(MatrixStack matrices, float v) {
         if (MC.options.debugEnabled || !CONFIG.enable) return;
 
         // Calculate current day in the world
@@ -56,47 +55,43 @@ public class WorldDaysModClient implements ClientModInitializer {
         // Figure out what to render
         Text text;
         if (CONFIG.shouldUseCustomText) {
-            text = Text.literal(String.format(CONFIG.customText, day)).setStyle(style);
+            text = new LiteralText(String.format(CONFIG.customText, day)).setStyle(style);
         } else {
-            text = Text.translatable("hud.world-days.day", day).setStyle(style);
+            text = new TranslatableText("hud.world-days.day", day).setStyle(style);
         }
 
         // Create "layer" for text rendering
-        context.getMatrices().push();
+        matrices.push();
 
         // Move said layer to Text coordinates
-        context.getMatrices().translate(CONFIG.hudX, CONFIG.hudY, 0);
+        matrices.translate(CONFIG.hudX, CONFIG.hudY, 0);
 
         // scale layer to Font Size
-        context.getMatrices().scale(CONFIG.fontSize, CONFIG.fontSize, 0.0F);
+        matrices.scale(CONFIG.fontSize, CONFIG.fontSize, 0.0F);
 
         // Render Shadow first if needed
         if (CONFIG.shouldDrawShadow) {
             MC.textRenderer.draw(
-                    text,
+                    matrices, text,
                     CONFIG.shadowRelativeX, CONFIG.shadowRelativeY,
                     rgb2argb(
                             Integer.parseInt(CONFIG.shadowColor.substring(1), 16),
                             CONFIG.alpha
-                    ), false,
-                    context.getMatrices().peek().getPositionMatrix(), context.getVertexConsumers(),
-                    TextRenderer.TextLayerType.NORMAL, 0, 15728880
+                    )
             );
         }
 
         // Render text
         MC.textRenderer.draw(
-                text,
+                matrices, text,
                 0, 0,
                 rgb2argb(
                         Integer.parseInt(CONFIG.hudColor.substring(1), 16),
                         CONFIG.alpha
-                ), false,
-                context.getMatrices().peek().getPositionMatrix(), context.getVertexConsumers(),
-                TextRenderer.TextLayerType.NORMAL, 0, 15728880
+                )
         );
 
         // Revert all settings, so other can render their things
-        context.getMatrices().pop();
+        matrices.pop();
     }
 }
