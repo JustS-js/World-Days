@@ -30,14 +30,12 @@ public class MixinVideoOptionsScreen extends Screen {
 		if (isLoaded("modmenu") && isLoaded("cloth-config")) return;
 
 		if (isLoaded("cloth-config")) {
-			ButtonWidget btn = new ButtonWidget(
-					5, 5,
-					150, 20,
+			ButtonWidget btn = ButtonWidget.builder(
 					Text.translatable("config.world-days.title"),
 					(button) -> WorldDaysModClient.MC.setScreen(
 							ClothConfigIntegration.generateScreen((VideoOptionsScreen)(Object)this)
 					)
-			);
+			).size(150, 20).position(5, 5).build();
 			this.addDrawableChild(btn);
 		} else {
 			SimpleOption<Boolean> simpleOption = SimpleOption.ofBoolean(
