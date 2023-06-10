@@ -6,9 +6,12 @@ Have you ever watched "100 days in Minecraft" series? Have you ever wondered abo
 Now, with this mod, you can easily customize your HUD to show the Day Counter on your screen!
 Any Color, Any Size, Any Style, and even Your Own Custom Fonts!
 
+![](images/gallery_1.png)
+
 ## How to use
 
 You can visit [wiki](https://github.com/JustS-js/World-Days/wiki) to lear more about customization!
+![](images/gallery_2.png)
 
 ## Dependencies
 
