@@ -15,7 +15,7 @@ You can visit [wiki](https://github.com/JustS-js/World-Days/wiki) to lear more a
 
 ## Dependencies
 
-It is essential to use [Fabric-API](https://github.com/FabricMC/fabric) with this mod.
+It is essential to use [Fabric-API](https://modrinth.com/mod/fabric-api) with this mod.
 
 It is not necessary, but you may use [Mod Menu](https://github.com/TerraformersMC/ModMenu) and [Cloth Config API](https://github.com/shedaniel/cloth-config) for better experience.
 
