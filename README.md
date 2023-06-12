@@ -21,4 +21,4 @@ It is not necessary, but you may use [Mod Menu](https://github.com/TerraformersM
 
 ## License
 
-This piece of software is available under the CC0 license. Feel free to learn from it.
+This piece of software is available under the CC-BY-4.0 license. Feel free to learn from it.
